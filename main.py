@@ -36,19 +36,27 @@ def upload():
     sfname = 'not yet#'
     if request.method == 'POST':
         f = request.files['photo']
+        fname = str(secure_filename(f.filename))
         path = 'static/uploaded/' + time.asctime() 
-        sfname = path + "/" + str(secure_filename(f.filename))
-        print("deebug: hello")
+        image_input = path + "/" + fname
         try:
             os.makedirs(path)
         except OSError as err:
             print ("deebug: Creation of the directory %s failed:%s" % (path, err))
         else:
             print ("deebug: Creation of the directory %s succeeded" % path)
-        f.save(sfname)
-        run_style_transfer(sfname)
+        f.save(image_input)
+        images_dir = run_style_transfer(image_input) + "/images"
 
-    return render_template('upload.html', sfname=sfname)
+        x = fname.split(".")
+        if (len(x) == 0):
+            image_monet = images_dir + "/" + fname + "_style_monet_pretrained_fake"
+        else:
+            image_monet = images_dir + "/" + ".".join(x[0:-1]) + "_style_monet_pretrained_fake" + ".png"
+#       
+        return render_template('uploaded_with_results.html', image_input = image_input, image_monet = image_monet)
+    else: 
+        return render_template('upload.html')
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App

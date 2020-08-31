@@ -1,17 +1,17 @@
 <!doctype html>
 <html>
 <head>
-  <title>Hello Style - Home</title>
+  <title>Hello Style - Uploaded</title>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-  <h1>Hello Style examples</h1>
-  <form method=POST enctype=multipart/form-data action="/upload">
-    <input type=file name=photo>
-    <input type="submit">
-  </form>
+  <h1>Hello uploaded</h1>
+
+
+  <p> Monet style: </p>
+  <img src="{{ image_monet }}" alt="{{image_monet }}">
 
 </body>
 </html>

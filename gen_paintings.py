@@ -13,7 +13,7 @@ from util import html
 
 # model_names = ["style_vangogh_pretrained", "style_monet_pretrained", "style_ukiyoe_pretrained"]
 def run_style_transfer(filename):
-    run_pix2pix(filename)
+    return run_pix2pix(filename)
 
 
 def run_pix2pix(filename):
@@ -25,18 +25,15 @@ def run_pix2pix(filename):
     opt.no_flip = True    # no flip; comment this line if results on flipped images are needed.
     opt.display_id = -1   # no visdom display; the test code saves the results to a HTML file.
     input_dir = os.path.dirname(filename)
-    print("deebug: input_dir:opt=%s" % (input_dir))
     opt.dataroot = input_dir
     dataset = create_dataset(opt)  # create a dataset given opt.dataset_mode and other options)
 
     # create a website
     web_dir = os.path.join(input_dir, "output")  # define the website directory
     # web_dir = os.path.join(opt.results_dir, os.path.dirname(filename))  # define the website directory
-    print('creating web directory', web_dir)
     webpage = html.HTML(web_dir, 'Experiment = %s, Phase = %s, Epoch = %s' % (opt.name, opt.phase, opt.epoch))
 
     for model_name in ["style_vangogh_pretrained", "style_monet_pretrained", "style_ukiyoe_pretrained"]:
-        print("model_name=[%s]" % (model_name))
         opt.name = model_name
         model = create_model(opt)      # create a model given opt.model and other options
         model.setup(opt)               # regular setup: load and print networks; create schedulers
@@ -48,9 +45,9 @@ def run_pix2pix(filename):
             model.test()           # run inference
             visuals = model.get_current_visuals()  # get image results
             img_path = model.get_image_paths()     # get image paths
-            print("deebug: img_path=[%s]" % (img_path))
             save_images(webpage, visuals, img_path, aspect_ratio=opt.aspect_ratio, width=opt.display_winsize, model_name=model_name)
         webpage.save()  # save the HTML
+    return web_dir
 
 if __name__ == '__main__':
     run_pix2pix("input/golden_gate_bridge.jpg")
