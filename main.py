@@ -36,9 +36,11 @@ def upload():
     sfname = 'not yet#'
     if request.method == 'POST':
         f = request.files['photo']
+        print("deebug: *** f.filename=%s" % (f.filename))
         fname = str(secure_filename(f.filename))
         path = 'static/uploaded/' + time.asctime() 
         image_input = path + "/" + fname
+        print("deebug: *** fname=%s" % (fname))
         try:
             os.makedirs(path)
         except OSError as err:
@@ -52,9 +54,12 @@ def upload():
         if (len(x) == 0):
             image_monet = images_dir + "/" + fname + "_style_monet_pretrained_fake"
         else:
+            image_real = images_dir + "/" + ".".join(x[0:-1]) + "_style_monet_pretrained_real" + ".png"
             image_monet = images_dir + "/" + ".".join(x[0:-1]) + "_style_monet_pretrained_fake" + ".png"
+            image_vangogh = images_dir + "/" + ".".join(x[0:-1]) + "_style_vangogh_pretrained_fake" + ".png"
+            image_ukiyoe = images_dir + "/" + ".".join(x[0:-1]) + "_style_ukiyoe_pretrained_fake" + ".png"
 #       
-        return render_template('uploaded_with_results.html', image_input = image_input, image_monet = image_monet)
+        return render_template('uploaded_with_results.html', image_real = image_real, image_ukiyoe = image_ukiyoe, image_monet = image_monet, image_vangogh = image_vangogh)
     else: 
         return render_template('upload.html')
 

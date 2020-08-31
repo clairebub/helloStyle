@@ -1,17 +1,24 @@
 <!doctype html>
 <html>
 <head>
-  <title>Hello Style - Uploaded</title>
+  <title>Hello Style</title>
   <script src="{{ url_for('static', filename='script.js') }}"></script>
   <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-  <h1>Hello uploaded</h1>
-
+  <h1>Your uploaded images in artistic styles:</h1>
+  <p> original image: </p>
+  <img src="{{ image_real }}" alt="{{image_real }}">
 
   <p> Monet style: </p>
   <img src="{{ image_monet }}" alt="{{image_monet }}">
+
+  <p> Vangoh style: </p>
+  <img src="{{ image_vangogh }}" alt="{{image_vangogh }}">
+
+  <p> Ukiyoe style: </p>
+  <img src="{{ image_ukiyoe }}" alt="{{image_ukiyoe }}">
 
 </body>
 </html>

@@ -61,7 +61,6 @@ def save_images(webpage, visuals, image_path, aspect_ratio=1.0, width=256, model
 
     for label, im_data in visuals.items():
         im = util.tensor2im(im_data)
-        print("deebug: name=%s, model_name=%s, label=%s" % (name, model_name, label))
         if model_name:
             image_name = '%s_%s_%s.png' % (name, model_name, label)
         else:
